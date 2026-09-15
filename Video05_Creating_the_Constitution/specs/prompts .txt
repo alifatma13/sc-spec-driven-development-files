@@ -1,0 +1,4 @@
+1. We are writing a Agent clinic a place for AI agents to get relief from their humans look in the read me md for input from stakeholders. Lets create a constitution in a spec directory mission md tech stack md road map md for highlevel implementation order in a very small phases of work . you must use your ask user Question tool grouped on these 3 before writing to disk.
+2. Can we not have storage
+3.find the next phase on specs/roadmap.md and make a branch and ask me about the feature spec . create a new directory YYYY-MM-DD-feature-name under spec for this feature work. in there plan md as a series of numbered task groups. requirements.md for the scope, decisions and context, validation md for how to know implementation succesded and can be merged. refer mission and tech stack md for guidance
+4. shouldnt app folder be structured - agent said dont build ahead of time
