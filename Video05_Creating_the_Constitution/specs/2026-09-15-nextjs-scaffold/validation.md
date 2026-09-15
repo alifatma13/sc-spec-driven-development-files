@@ -56,15 +56,25 @@ Must start without errors. Opening `http://localhost:3000` in a browser shows th
 
 In the browser, the heading and tagline are visibly styled (for example, centered, with a larger heading and a muted tagline), not unstyled browser defaults. The stylesheet linked from the page contains rules for the utility classes used in `src/app/page.tsx`.
 
-### 7. Versions are pinned
+### 7. The page is responsive
+
+With `npm run dev` running, use DevTools' device toolbar at 320 px and at 1440 px:
+
+- Nothing scrolls sideways at either width. In the console, `document.documentElement.scrollWidth` equals `window.innerWidth`.
+- The heading and tagline are fully visible, never clipped, and keep a gutter from the screen edge.
+- The served HTML contains Next.js' default `<meta name="viewport" content="width=device-width, initial-scale=1"/>`. Nothing in `src/` exports a `viewport` object or sets `maximum-scale` or `user-scalable=no`.
+
+The full breakpoint sweep arrives with the real layout in Phase 2. The standing rules are in `tech-stack.md`.
+
+### 8. Versions are pinned
 
 No entry under `dependencies` or `devDependencies` in `package.json` starts with `^` or `~`.
 
-### 8. Strict TypeScript is on
+### 9. Strict TypeScript is on
 
 `tsconfig.json` contains `"strict": true`.
 
-### 9. Placeholder is gone and the tree is clean
+### 10. Placeholder is gone and the tree is clean
 
 - `src/index.ts` and `dist/` no longer exist
 - `package.json` has no `main` field and no `tsc`-based scripts
@@ -72,7 +82,7 @@ No entry under `dependencies` or `devDependencies` in `package.json` starts with
 - After a build, `git status` shows no `.next/` or other build output
 - `package-lock.json` is committed
 
-### 10. Scope stayed small
+### 11. Scope stayed small
 
 - The only route is `/`
 - There is no header, navigation, footer, custom font, or `src/lib/data/`
@@ -82,5 +92,5 @@ No entry under `dependencies` or `devDependencies` in `package.json` starts with
 
 - No automated tests (the test tool will be chosen with the first real feature)
 - No CI pipeline
-- No cross-browser, mobile, or accessibility checks (Phase 15)
+- No cross-browser or accessibility audit (Phase 15). Responsive behavior is *not* deferred: check 7 covers it at this phase's scale
 - No custom 404 or error pages (Phase 16)

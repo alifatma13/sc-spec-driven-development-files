@@ -16,6 +16,7 @@ The premise is playful, but the product is real. AgentClinic should be a working
 - **Reliable over clever.** A popular, well-supported TypeScript stack with predictable behavior. *(Mary, engineering)*
 - **Features that tell a story.** Agents, their ailments, therapies, and booking appointments are the core of the product. *(Susan, product)*
 - **Attractive and modern.** A polished site that looks good and works well in any modern browser. *(Steve, marketing)*
+- **Responsive on every screen.** The same site works on a phone, a tablet, and a wide desktop. Layouts are designed for the small screen first and grow from there. A page that only holds together on a laptop is not finished. *(Steve, marketing)*
 - **Humor with care.** Copy and naming can be witty, but it should never get in the way of clarity or usability.
 - **Small, visible steps.** We build in very small phases, and each phase leaves the app working and demoable.
 
@@ -24,3 +25,4 @@ The premise is playful, but the product is real. AgentClinic should be a working
 - An agent can go from "something's wrong" to a booked appointment in a few clicks.
 - Staff can see the clinic's day at a glance.
 - The site is pleasant enough that people want to click around it.
+- Every page is usable one-handed on a phone and still looks deliberate on a wide monitor.

@@ -2,7 +2,7 @@
 
 ## Scope
 
-Give every page a shared frame and the clinic's visual identity. The root layout renders a header, the page content, and a footer. The header holds the main navigation, which for now is only the "AgentClinic" wordmark linking home. A small set of color tokens (the "Calm clinic" palette) and the Geist font family are defined once. The colors follow the visitor's system light or dark setting. The header, footer, and existing home page all use these tokens.
+Give every page a shared frame and the clinic's visual identity. The root layout renders a header, the page content, and a footer. The header holds the main navigation, which for now is only the "AgentClinic" wordmark linking home. A small set of color tokens (the "Calm clinic" palette) and the Geist font family are defined once. The colors follow the visitor's system light or dark setting. The header, footer, and existing home page all use these tokens. The frame is responsive from 320 px up, following the rules in `tech-stack.md`.
 
 ## Out of Scope
 
@@ -10,7 +10,7 @@ Give every page a shared frame and the clinic's visual identity. The root layout
 - No active-link highlighting. It needs a client component (`usePathname`) and only matters once there is a second link (Phase 4)
 - No landing page copy or section links on the home page (Phase 3)
 - No manual light/dark toggle. The site follows the OS setting only
-- No mobile menu. The header has nothing to collapse yet
+- No mobile menu or hamburger button. With one link there is nothing to collapse, and the nav wraps rather than overflowing. Whether a menu is needed gets decided in the phase that makes the nav too wide for 320 px (Phase 4 onward). Responsive behavior itself is in scope — only the menu pattern is deferred
 - No favicon, logo image, or Open Graph images
 - No skip link or site-wide keyboard and contrast audit (Phase 15)
 - No custom 404 or error pages (Phase 16)
@@ -55,8 +55,20 @@ The tech stack names the header, navigation, and footer as examples of shared co
 ### The layout owns `<main>` and the page height
 `<body>` becomes a full-height flex column (`min-h-dvh flex flex-col`), and `<main>` grows (`flex-1`), so the footer stays at the bottom on short pages. `<main>` moves from `page.tsx` to `layout.tsx`, so every page gets exactly one. Header, main, and footer content share the same width classes, `mx-auto w-full max-w-5xl px-4 sm:px-6`. Spacing otherwise uses Tailwind's default scale, with no custom spacing tokens.
 
+### The frame is responsive from 320 px
+`tech-stack.md` makes responsive design a standing rule for every phase. This phase builds the frame that every later page sits in, so the rule is settled here once rather than page by page:
+
+- Header, `<main>`, and footer share `mx-auto w-full max-w-5xl px-4 sm:px-6`. The gutter is 16 px on phones and 24 px from `sm` up, and content centers inside 64 rem on wide screens.
+- The nav's vertical padding steps up (`py-2 sm:py-3`), and the wordmark is an `inline-flex min-h-11 items-center` box, giving it a 44 px tap target without changing how it looks.
+- The footer's two lines stack in a column on phones and sit on one row from `sm` up.
+- The home hero steps up, never down: `py-16 sm:py-24` and `text-4xl sm:text-5xl`.
+- `<body>` uses `min-h-dvh`, not `min-h-screen`, so mobile browser chrome cannot push the footer out of reach.
+- No `viewport` export. Next.js already emits `<meta name="viewport" content="width=device-width, initial-scale=1">`, and we never set `maximum-scale` or `user-scalable=no`, so pinch-zoom keeps working.
+
+The layout is a single column at every width, so `sm` is the only breakpoint this phase needs.
+
 ### Home page adopts the tokens, copy unchanged
-`src/app/page.tsx` keeps its heading and tagline text. It drops its `<main>` wrapper and `min-h-screen`, since the layout owns both now, and swaps `text-gray-500` for `text-muted`. Phase 3 rewrites the page.
+`src/app/page.tsx` keeps its heading and tagline text. It drops its `<main>` wrapper and `min-h-screen`, since the layout owns both now, and swaps `text-gray-500` for `text-muted`. Its padding and heading size gain `sm:` steps as described above, and the tagline is width-limited so it wraps sensibly instead of stretching. The words on the page do not change. Phase 3 rewrites the page.
 
 ### Server components only
 The layout, page, Header, and Footer have no `"use client"`. Dark mode is pure CSS, and nothing here needs interactivity.
@@ -74,6 +86,6 @@ Versions stay as pinned in Phase 1 (Next.js 16.3.5, Tailwind CSS 4.3.3). No depe
 
 ## Stakeholder Notes
 
-- **Steve (marketing)** gets the most out of this phase: a palette, typography, dark mode that follows the system setting, and a consistent frame on every page. Contrast is checked up front so the look stays legible.
+- **Steve (marketing)** gets the most out of this phase: a palette, typography, dark mode that follows the system setting, and a consistent frame on every page that holds from a 320 px phone to a wide monitor. Contrast and small screens are both checked up front, so the look stays legible wherever it is opened.
 - **Mary (engineering)** gets color tokens defined in one file, no new dependencies, untouched version pins, and server components only.
 - **Susan (product)** gets no features yet. The header nav is where her sections will appear as each one ships.

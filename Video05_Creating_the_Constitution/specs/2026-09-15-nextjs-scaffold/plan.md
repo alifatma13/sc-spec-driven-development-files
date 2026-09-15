@@ -33,7 +33,7 @@
 17. Run `npm run lint`. It must exit 0 with no errors or warnings
 18. Run `npm run build`. It must exit 0 with no type errors
 19. Run `npm start` and confirm the home page responds with the heading and tagline (see `validation.md`)
-20. Run `npm run dev`, open `http://localhost:3000` in a browser, and confirm the page is visibly styled
+20. Run `npm run dev`, open `http://localhost:3000` in a browser, and confirm the page is visibly styled. Narrow the window (or use DevTools' device toolbar) to 320 px and confirm nothing scrolls sideways and no text is clipped
 21. Run `git status` and confirm no build output (`.next/`, `dist/`) is tracked and `package-lock.json` is included
 
 ## Group 6 — Wrap Up

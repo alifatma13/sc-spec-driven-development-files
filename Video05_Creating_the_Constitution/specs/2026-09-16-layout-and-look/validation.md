@@ -6,13 +6,16 @@ All of the following must be true before this branch is merged.
 
 > On Windows PowerShell, `curl` is an alias for `Invoke-WebRequest`. Use `curl.exe` for the commands below.
 
-### 1. Lint passes
+### 1. Lint and tests pass
 
 ```
 npm run lint
+npm test
 ```
 
-Must exit with code 0 and report no errors or warnings.
+`npm run lint` must exit with code 0 and report no errors or warnings. `npm test` must exit with code 0 with every test passing.
+
+Responsive behavior is deliberately not asserted here: jsdom has no layout engine and does not evaluate media queries, so it cannot tell a working breakpoint from a broken one. Check 7 covers it in a real browser.
 
 ### 2. Production build succeeds
 
@@ -65,9 +68,26 @@ In DevTools, open **Rendering → Emulate CSS media feature prefers-color-scheme
 - Switching back to light restores the light theme
 - The page's stylesheet contains a `@media (prefers-color-scheme: dark)` rule that redefines the color tokens
 
-### 7. Holds together at phone width
+### 7. Responsive from 320 px up
 
-In DevTools' device toolbar at 375 px wide, in both themes, the header, heading, tagline, and footer are all readable and nothing scrolls horizontally. A full mobile audit waits for Phase 15.
+With `npm run dev` running, use DevTools' device toolbar at **320, 375, 768, 1024, and 1440 px**, in both themes:
+
+- **No sideways scrolling at any width.** At each one, `document.documentElement.scrollWidth === window.innerWidth` is `true` in the console.
+- The wordmark, heading, tagline, and both footer lines are fully visible at every width, never clipped and never overlapping.
+- **The gutter holds.** Content never touches the screen edge: 16 px below `sm`, 24 px from `sm` up.
+- **The footer stacks.** Its two lines sit in a column at 320 and 375 px, and on one row from `sm` (640 px) up.
+- **The heading steps up.** The `<h1>` computes to 36 px (`text-4xl`) below 640 px and 48 px (`text-5xl`) at and above it, and it stays on one line at 320 px.
+- **The wordmark is tappable.** Its box in DevTools is at least 44 px tall.
+- **The viewport tag is Next.js' own.** The served HTML contains `<meta name="viewport" content="width=device-width, initial-scale=1"/>`, and this returns nothing:
+
+```
+Get-ChildItem src -Recurse -Include *.tsx,*.css | Select-String -Pattern 'viewport|maximum-scale|user-scalable|min-h-screen|w-screen'
+```
+
+- **Zoom works.** At 200 % browser zoom in a 1280 px window, nothing is clipped and nothing scrolls sideways.
+- **Full height is dynamic.** `<body>` uses `min-h-dvh`, and on a phone (or an emulated one with browser chrome) the footer sits at the bottom without being pushed under the URL bar.
+
+Phase 15 re-checks all of this across the finished site; it is not where responsiveness starts.
 
 ### 8. Text contrast meets WCAG AA
 
@@ -102,14 +122,14 @@ git diff main --stat -- package.json package-lock.json
 Both must print nothing, meaning there are no client components and no dependency changes. In addition:
 
 - The only route is `/`, and the only nav link is the home wordmark
-- The only new source files are `src/components/Header.tsx` and `src/components/Footer.tsx`
+- The only new source files are `src/components/Header.tsx` and `src/components/Footer.tsx`, plus their tests (`src/app/page.test.tsx`, `src/components/Header.test.tsx`) and `vitest.config.mts`
 - There is no theme toggle, mobile menu, favicon, or `src/lib/data/`
 - After a build, `git status` shows no `.next/` or other build output
 
 ## Not Required
 
-- No automated tests (the test tool will be chosen with the first real feature)
 - No CI pipeline
-- No full cross-browser, keyboard, or accessibility audit (Phase 15)
+- No full cross-browser, keyboard, or accessibility audit (Phase 15). Responsive behavior is *not* deferred — see check 7
+- No mobile menu (there is one nav link to collapse)
 - No custom 404 or error pages (Phase 16)
 - No manual light/dark toggle

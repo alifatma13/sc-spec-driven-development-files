@@ -4,6 +4,8 @@ High-level implementation order. Each phase is deliberately very small: it shoul
 
 Order: **foundation → features → dashboard → polish**.
 
+**Responsive design is not a phase.** Every phase ships UI that works from 320 px up, and every phase's `validation.md` checks it. The rules live in `tech-stack.md`. Phase 15 is the final audit, not the first time anyone thinks about small screens.
+
 ## Foundation
 
 1. ✅ **Next.js scaffold.** *(Done)* Replace the placeholder `src/index.ts` setup with a Next.js + TypeScript + Tailwind app. A home page says "AgentClinic", and `npm run dev`, `npm run build`, and `npm start` all work.
@@ -38,5 +40,5 @@ Order: **foundation → features → dashboard → polish**.
 
 ## Polish
 
-15. **Responsive and accessible.** Check mobile layouts, keyboard navigation, and color contrast.
+15. **Accessibility and responsive audit.** A site-wide sweep now that every page exists: keyboard navigation, focus order, a skip link, color contrast, screen-reader labels, and a pass over every page at each breakpoint to catch drift. Individual pages were already built responsive in their own phase.
 16. **Empty and error states.** Friendly (and on-brand) messages for no data, not-found pages, and failed actions.

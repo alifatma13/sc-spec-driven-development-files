@@ -25,6 +25,9 @@ Set up ESLint with Next.js's recommended config (`eslint-config-next`, core-web-
 ### Home page: heading + tagline
 The page shows an `<h1>` reading "AgentClinic" and one short tagline taken from the mission ("A place for AI agents to get relief from their humans."). A few Tailwind utility classes are applied so we can see that styling works. The witty landing copy waits for Phase 3.
 
+### Responsive from the first page
+The responsive rules in `tech-stack.md` apply from this phase onward, not from Phase 15. This page is a heading and a tagline, so meeting them costs nothing: no fixed widths, centered fluid text, and a heading size that steps up at `sm`. Next.js emits the `width=device-width` viewport meta tag itself, so there is no `viewport` export to write, and we never disable pinch-zoom. Phase 15 is a final audit of a finished site, not the first time small screens are considered.
+
 ### Manual validation, no test framework yet
 This phase is verified with lint, build, start, and a request to the running page (see `validation.md`). Choosing a test tool is deferred to the first real feature, as the tech stack says.
 
