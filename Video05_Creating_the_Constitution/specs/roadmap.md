@@ -7,7 +7,7 @@ Order: **foundation → features → dashboard → polish**.
 ## Foundation
 
 1. ✅ **Next.js scaffold.** *(Done)* Replace the placeholder `src/index.ts` setup with a Next.js + TypeScript + Tailwind app. A home page says "AgentClinic", and `npm run dev`, `npm run build`, and `npm start` all work.
-2. **Layout and look.** Shared layout with header, navigation, and footer, plus the base colors, fonts, and spacing that give the clinic its identity.
+2. ✅ **Layout and look.** *(Done)* Shared layout with header, navigation, and footer, plus the base colors, fonts, and spacing that give the clinic its identity.
 3. **Landing page.** A short, witty explanation of what AgentClinic is, with links to the main sections.
 
 ## Agents

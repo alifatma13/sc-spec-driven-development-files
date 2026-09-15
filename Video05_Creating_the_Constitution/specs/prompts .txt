@@ -2,3 +2,4 @@
 2. Can we not have storage
 3.find the next phase on specs/roadmap.md and make a branch and ask me about the feature spec . create a new directory YYYY-MM-DD-feature-name under spec for this feature work. in there plan md as a series of numbered task groups. requirements.md for the scope, decisions and context, validation md for how to know implementation succesded and can be merged. refer mission and tech stack md for guidance
 4. shouldnt app folder be structured - agent said dont build ahead of time
+5. now I have merged to main  create a new branch from the main to move forward - created new spec folder
