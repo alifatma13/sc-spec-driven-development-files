@@ -6,10 +6,9 @@ import Initials from "@/components/Initials";
 import RelatedSection from "@/components/RelatedSection";
 import { getAgent, getAgents, getAilmentsForAgent } from "@/lib/data";
 
-type AgentPageProps = {
-  // `params` is a Promise in this version of Next.js and must be awaited.
-  params: Promise<{ id: string }>;
-};
+// PageProps is a global helper generated from the route, so `params` keeps in
+// step with the folder name. It resolves to a Promise here and must be awaited.
+type AgentPageProps = PageProps<"/agents/[id]">;
 
 export function generateStaticParams() {
   return getAgents().map(({ id }) => ({ id }));

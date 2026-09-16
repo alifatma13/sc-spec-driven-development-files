@@ -10,3 +10,4 @@
 10. if the change is big then schedule it on the road map as its own featue phase instead of doing in re-planning.
 11. I want to keep a changelog md  in the project root with heading for dates. if no change log examine git commits and bullets for each date, then as we work we will manually invoke this skill before merging. help me wite a skill for this
 12. update read me, formatting, test writing and other quality checks
+13. skills are great for definable and repeatable workflows - skill for implementing a change log update
