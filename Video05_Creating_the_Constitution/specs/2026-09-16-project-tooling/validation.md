@@ -44,6 +44,7 @@ On a clean, merged branch this exits 0. Its three extra checks must each fail on
 
 - with an uncommitted file present → `tree` fails
 - with the `changelog:last-commit` marker set to any earlier commit → `changelog` fails, naming how many commits behind
+- **but not** for the commit that writes the bullets. That commit is always newer than the marker it carries, so the check excludes `CHANGELOG.md` exactly as `changelog.py`'s own scan does. Commit a changelog update on its own and `--strict` must still pass; if the two ever disagree about what counts, they are both wrong
 - `npm run check -- --strict --base=c9c4e55` → `spec-coverage` fails, because commit `6a4cc63` changed three pages under `src/` and no spec document. This is the drift that reached review; it must stay detectable
 
 ### 4. The Stop hook runs the check

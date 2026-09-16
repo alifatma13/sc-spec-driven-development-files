@@ -195,7 +195,18 @@ if (strict) {
     if (!marker) {
       fail("changelog", "no changelog:last-commit marker in the header");
     } else {
-      const behind = git("rev-list", "--count", `${marker[1]}..HEAD`);
+      // Exclude CHANGELOG.md, exactly as changelog.py's own scan does. The
+      // commit that writes the bullets is always newer than the marker those
+      // bullets carry, so counting it would fail this check on every run that
+      // did its job.
+      const behind = git(
+        "rev-list",
+        "--count",
+        `${marker[1]}..HEAD`,
+        "--",
+        ".",
+        ":(exclude)CHANGELOG.md",
+      );
       if (behind === null) {
         fail("changelog", `marker ${marker[1].slice(0, 7)} is not a commit in this repo`);
       } else if (behind !== "0") {
