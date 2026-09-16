@@ -7,3 +7,4 @@
 7. then I asked for tests : update the tech stack md to capture that we want to use the vitetest tests for validation and write a script in package.json 
 8. asked for site wide change: products web ui should follow responsive design. update product specs and all feature specs to reflect this, as well as any code
 9. Spec and code need to be in sync.
+10. if the change is big then schedule it on the road map as its own featue phase instead of doing in re-planning.
