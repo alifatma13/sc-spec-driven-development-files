@@ -76,7 +76,12 @@ Both must exit 0 and print readable output. Then the failure paths, each of whic
 git log --oneline origin/main..HEAD
 ```
 
-Every commit listed must have a bullet in `CHANGELOG.md`, except the one that adds those bullets — a run cannot record the commit that contains it. That final entry is written by hand, and `SKILL.md` says so.
+Every commit listed must have a bullet in `CHANGELOG.md`, except the commit that adds those bullets — a run cannot record the commit that contains it.
+
+Which way that resolves depends on what else the commit touches:
+
+- **Bullets committed alone.** The commit touches only `CHANGELOG.md`, so the scan excludes it and nothing is missing. Preferred.
+- **Bullets committed alongside code.** The commit is scanned, because it touches code, but its own subject cannot already be in the file. That bullet is written by hand, and `SKILL.md` says so.
 
 ### 7. The records match the repo
 

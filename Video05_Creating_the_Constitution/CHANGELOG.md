@@ -2,6 +2,7 @@
 <!-- changelog:last-commit d92853081e4724b18c1f05aeb270fa0dc1303100 -->
 
 ## 2026-09-16
+- Say how the changelog resolves its own final entry
 - Exclude CHANGELOG.md from the strict changelog check
 - Fix what the review found in the app
 - Fix five bugs in the changelog and readme scripts
