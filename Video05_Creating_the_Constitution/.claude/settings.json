@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/check-drift.mjs --hook",
+            "timeout": 30,
+            "statusMessage": "Checking for spec drift"
+          }
+        ]
+      }
+    ]
+  }
+}
