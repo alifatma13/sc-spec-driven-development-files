@@ -14,25 +14,29 @@ listing and nobody trusts it.
 
 ## Workflow
 
-1. Gather the current facts (read-only, writes nothing):
+1. List the routes and see which ones the README is missing (read-only):
 
 ```bash
 python .claude/skills/update-readme/scripts/readme_facts.py
 ```
 
-Use `python3` on macOS and Linux. It prints routes, npm scripts, runtime
-dependencies, roadmap status, spec folders, and any route the README fails to
-mention.
+Use `python3` on macOS and Linux.
 
-2. Read the existing `README.md` if there is one.
+2. Read the rest of the facts straight from the files that hold them — they are
+   short, and a parser for them would just break whenever they are restyled:
+   - `package.json` — npm scripts, runtime dependencies, required Node version
+   - `specs/roadmap.md` — which phases are done and which is next
+   - `specs/mission.md` — what the product is, for the opening line
 
-3. **If there is no README**, write one using the section order below.
+3. Read the existing `README.md` if there is one.
 
-4. **If there is one**, reconcile it rather than replacing it. Fix what is now
+4. **If there is no README**, write one using the section order below.
+
+5. **If there is one**, reconcile it rather than replacing it. Fix what is now
    false, add what is missing, and leave correct prose alone — including its
    voice. A diff full of rewordings hides the one line that actually changed.
 
-5. Show the user what changed and why, then commit it on the branch.
+6. Show the user what changed and why, then commit it on the branch.
 
 ## Sections
 
@@ -60,9 +64,9 @@ stakeholder input that `specs/mission.md` was derived from. They are a record of
 what was asked for, not a description of what was built — so they do not go
 stale and must not be "corrected". Add to the README around them.
 
-**Never state a fact the script did not report.** No invented test counts,
-benchmarks, licence, deploy target, or roadmap dates. If the project has no
-licence, the README has no licence section.
+**Never state a fact you did not read out of the project.** No invented test
+counts, benchmarks, licence, deploy target, or roadmap dates. If the project has
+no licence, the README has no licence section.
 
 **Match the specs' voice.** `mission.md` and the phase specs are plain and dry,
 with the jokes in the product rather than the documentation. The README reads
@@ -72,13 +76,13 @@ the same way.
 get them running and point them there.
 
 **Check the commands.** Every command in the Quick start must exist in
-`package.json`'s `scripts`. The script prints them; do not copy commands from
+`package.json`'s `scripts`. Read it and confirm; do not copy commands from
 another project's README.
 
 ## Notes
 
-- Run from the project root; the script resolves `src/app`, `specs/`, and
-  `package.json` relative to the working directory
+- Run from the project root; the script resolves `src/app` and `README.md`
+  relative to the working directory
 - The drift check is text matching, so a route mentioned in passing counts as
   mentioned. Use it as a prompt to look, not as a pass/fail gate
 - Route groups (`(marketing)`) are stripped from reported paths, since they do

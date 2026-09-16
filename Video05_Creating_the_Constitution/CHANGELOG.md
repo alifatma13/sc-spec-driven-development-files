@@ -1,7 +1,8 @@
 # Changelog
-<!-- changelog:last-commit 4daf4e637570c0079faa690faaf8de7de89c6d07 -->
+<!-- changelog:last-commit c9c4e55b3ef79585b3e8130c5933573561eb445f -->
 
 ## 2026-09-16
+- Record the readme skill in the changelog
 - Add update-readme skill and bring the README up to date
 - Record the changelog skill commit
 - Add changelog skill and bootstrap CHANGELOG.md

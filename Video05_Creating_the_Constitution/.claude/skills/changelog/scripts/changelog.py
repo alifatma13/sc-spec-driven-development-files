@@ -23,6 +23,18 @@ MARKER_RE = re.compile(r"<!--\s*changelog:last-commit\s+([0-9a-f]{7,40})\s*-->")
 DATE_HEADING_RE = re.compile(r"^##\s+(\d{4}-\d{2}-\d{2})\s*$")
 
 
+def make_stdout_safe() -> None:
+    """--dry-run prints commit subjects, which are not guaranteed to be ASCII.
+
+    A subject like "Add phase 7 agents <-> ailments" crashes a stock Windows
+    console (cp1252) without this.
+    """
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
+
+
 def run_git(args: list[str]) -> str:
     result = subprocess.run(
         ["git", *args],
@@ -127,6 +139,7 @@ def main() -> int:
         help="git pathspec to scope commits to (default: this directory)",
     )
     args = parser.parse_args()
+    make_stdout_safe()
 
     try:
         run_git(["rev-parse", "--git-dir"])
@@ -143,7 +156,9 @@ def main() -> int:
         header.insert(0, TITLE)
 
     # Prefer the SHA marker: unlike a date, it cannot lose same-day commits.
-    marker_match = MARKER_RE.search(text)
+    # Search the header only, so a bullet quoting the marker cannot be mistaken
+    # for the real one.
+    marker_match = MARKER_RE.search("\n".join(header))
     since_sha = marker_match.group(1) if marker_match else None
     if since_sha and not sha_exists(since_sha):
         print(f"Recorded commit {since_sha[:8]} is gone (rebased?); rescanning full history.")
@@ -153,8 +168,10 @@ def main() -> int:
 
     if not since_sha and commits:
         # No usable marker, so skip anything already written down.
+        # removeprefix, not lstrip("- "): lstrip strips every leading "-" and
+        # space, mangling a subject that itself starts with a dash.
         recorded = {
-            line.lstrip("- ").strip()
+            line.strip().removeprefix("- ").strip()
             for _, lines in sections
             for line in lines
             if line.lstrip().startswith("- ")
