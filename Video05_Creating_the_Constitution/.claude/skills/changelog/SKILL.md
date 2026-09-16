@@ -44,18 +44,22 @@ python .claude/skills/changelog/scripts/changelog.py --dry-run
 <!-- changelog:last-commit 3a9ef4cbb0f2... -->
 
 ## 2026-09-16
-
 - Add phase 9 ailment and therapy cross-links
 - Add phase 8 therapy catalog
 
 ## 2026-09-15
-
 - Initial phase
 ```
 
 - One `# Changelog` title at the top
 - Date headings as `## YYYY-MM-DD`, newest first, newest commit first within a day
 - One bullet per commit, edited freely afterwards
+
+Commits that touch only `CHANGELOG.md` are skipped, so runs do not record each
+other. One consequence is unavoidable: a run cannot record the commit that
+contains it, because that commit does not exist yet. **The final entry before a
+merge is written by hand.** Running the script again instead just moves the gap
+down by one.
 
 ## How it stays in the right place
 
@@ -71,7 +75,16 @@ whether the boundary is inclusive. A SHA has no such ambiguity.
 Do not delete the marker comment. If it goes missing, or points at a commit that
 no longer exists after a rebase, the script rescans the whole history and skips
 any bullet whose text is already in the file — a safe fallback, but it cannot
-recognise a bullet you have reworded.
+recognise a bullet you have reworded, so that run may re-add it in its original
+wording.
+
+The fallback is one-shot: a run that finds no usable marker writes a fresh one
+before exiting, **even when it adds no bullets**. Delete the marker twice and you
+get the fallback twice, not permanently.
+
+Date headings may be decorated by hand — `## 2026-09-16 - Release 1` is still
+recognised as that date, and new bullets go underneath it rather than into a
+second section.
 
 ## Scoping
 
