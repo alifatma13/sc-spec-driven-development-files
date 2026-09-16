@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
-import Chip from "@/components/Chip";
 import RelatedSection from "@/components/RelatedSection";
 import SeverityChip from "@/components/SeverityChip";
 import { getAgentsForAilment, getAilment, getAilments, getTherapiesForAilment } from "@/lib/data";
@@ -50,25 +49,27 @@ export default async function AilmentPage({ params }: AilmentPageProps) {
 
       <RelatedSection
         title="Therapies that help"
+        items={therapies.map((therapy) => ({
+          id: therapy.id,
+          href: `/therapies/${therapy.id}`,
+          label: therapy.name,
+        }))}
         emptyText="Nothing is recommended for this one yet. The clinic is still working it out."
-      >
-        {therapies.map((therapy) => (
-          <Chip key={therapy.id} href={`/therapies/${therapy.id}`}>
-            {therapy.name}
-          </Chip>
-        ))}
-      </RelatedSection>
+        emptyHref="/therapies"
+        emptyLinkText="Browse all therapies"
+      />
 
       <RelatedSection
-        title="Who has this"
+        title="Agents with this"
+        items={sufferers.map((agent) => ({
+          id: agent.id,
+          href: `/agents/${agent.id}`,
+          label: agent.name,
+        }))}
         emptyText="No agent has reported this one yet. Clinic staff suspect underreporting."
-      >
-        {sufferers.map((agent) => (
-          <Chip key={agent.id} href={`/agents/${agent.id}`}>
-            {agent.name}
-          </Chip>
-        ))}
-      </RelatedSection>
+        emptyHref="/agents"
+        emptyLinkText="Browse all agents"
+      />
     </article>
   );
 }

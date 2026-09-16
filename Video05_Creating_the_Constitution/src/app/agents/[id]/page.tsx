@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
-import Chip from "@/components/Chip";
-import Initials from "@/components/Initials";
 import RelatedSection from "@/components/RelatedSection";
 import { getAgent, getAgents, getAilmentsForAgent } from "@/lib/data";
+import Initials from "./Initials";
 
 // PageProps is a global helper generated from the route, so `params` keeps in
 // step with the folder name. It resolves to a Promise here and must be awaited.
@@ -50,14 +49,15 @@ export default async function AgentPage({ params }: AgentPageProps) {
 
       <RelatedSection
         title="Ailments"
+        items={ailments.map((ailment) => ({
+          id: ailment.id,
+          href: `/ailments/${ailment.id}`,
+          label: ailment.name,
+        }))}
         emptyText={`${agent.name} has no ailments on file, which the clinic finds either admirable or suspicious.`}
-      >
-        {ailments.map((ailment) => (
-          <Chip key={ailment.id} href={`/ailments/${ailment.id}`}>
-            {ailment.name}
-          </Chip>
-        ))}
-      </RelatedSection>
+        emptyHref="/ailments"
+        emptyLinkText="Browse all ailments"
+      />
     </article>
   );
 }

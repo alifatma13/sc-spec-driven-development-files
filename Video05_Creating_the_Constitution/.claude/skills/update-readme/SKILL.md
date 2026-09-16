@@ -1,6 +1,6 @@
 ---
 name: update-readme
-description: Creates or updates README.md in the project root so it matches what the project actually is. Use when the user invokes /update-readme, asks to "update the readme", "create a readme", "the readme is out of date", or wants the README refreshed before merging a branch. Writes the README from scratch if there is none; otherwise reconciles the existing one against the real routes, scripts, dependencies, and roadmap status.
+description: Creates or updates README.md in the project root so it matches what the project actually is. Use when the user invokes /update-readme, asks to "update the readme", "create a readme", "the readme is out of date", or wants the README refreshed before merging a branch. Writes the README from scratch if there is none; otherwise reconciles the existing one against the real routes, scripts, and roadmap status.
 ---
 
 # Update README Skill

@@ -30,22 +30,22 @@ The types and seed data for all three entities are written once, up front. Split
 
 8. Create `src/components/PageHeader.tsx` (server): props `title` and `intro`. Renders an `<h1>` at `text-3xl sm:text-4xl` and a `text-muted max-w-prose` intro, with `py-8 sm:py-12` spacing
 9. Create `src/components/CardGrid.tsx` (server): a `<ul>` with `grid gap-4 sm:grid-cols-2 lg:grid-cols-3`, taking `children`
-10. Create `src/components/Card.tsx` (server): props `href`, `title`, `summary`, optional `eyebrow`, optional `children` for a footer slot. Renders an `<li>` holding a `next/link` that covers the card. Styling: `bg-surface`, `border-border` with a rounded border, `p-4 sm:p-5`, `h-full` so cards in a row match height, a `hover:border-primary` transition, and a visible `focus-visible` outline in `primary`. The whole card is one link, so there is only ever one tab stop per card
-11. Create `src/components/Nav.tsx` as `"use client"`: imports `usePathname`, takes no props, and holds the link list as a local `const` array of `{ href, label }`, starting with `{ href: "/agents", label: "Agents" }`. A link is current when `pathname === href || pathname.startsWith(href + "/")`. The current link gets `aria-current="page"` plus an underline; others get the hover underline. Each link is `inline-flex min-h-11 items-center` for the 44 px tap target
+10. Create `src/components/Card.tsx` (server): props `href`, `title`, `summary`, optional `eyebrow`, optional `children` for a footer slot. Renders an `<li>` holding a `next/link` that covers the card. Styling: `bg-surface`, `border-border-strong` with a rounded border (Phase 18: `border-border` is 1.23:1 on surface and reads as no edge at all), `p-4 sm:p-5`, `h-full` so cards in a row match height, a `hover:border-primary` transition, and a visible `focus-visible` outline in `primary`. The whole card is one link, so there is only ever one tab stop per card
+11. Create `src/components/Nav.tsx` as `"use client"`: imports `usePathname`, takes no props, and holds the link list as a local `const` array of `{ href, label }`, starting with `{ href: "/agents", label: "Agents" }`. A link is current when `pathname === href || pathname.startsWith(href + "/")`. The current link gets an underline; others get the hover underline. It carries `aria-current="page"` only when the pathname *equals* the href — a detail page gets `aria-current="true"`, the value for an ancestor section (corrected in Phase 18; this step originally said `"page"` for both). Each link is `inline-flex min-h-11 items-center` for the 44 px tap target
 12. Update `src/components/Header.tsx` (stays a server component): render the wordmark and `<Nav />` inside the existing `<nav aria-label="Main">`, wrapped in `flex flex-wrap items-center justify-between gap-x-6 gap-y-1`, so the links wrap under the wordmark below `sm` and share one row from `sm` up
 13. Create `src/app/agents/page.tsx` — a **synchronous** server component. Exports `metadata` with `title: "Agents"`. Renders `<PageHeader>` and a `<CardGrid>` of `<Card>`s from `getAgents()`, each linking to `/agents/[id]` with the agent's `name` as title, `role` as eyebrow, and `tagline` as summary
 14. Create `src/app/agents/page.test.tsx`: renders the page, asserts the `<h1>`, that all six agent names appear, and that each links to its own `/agents/[id]` href
-15. Create `src/components/Nav.test.tsx`: mock `next/navigation`'s `usePathname`; assert `Agents` has `aria-current="page"` at `/agents` and at `/agents/pip-the-planner`, and does not at `/`
+15. Create `src/components/Nav.test.tsx`: mock `next/navigation`'s `usePathname`; assert `Agents` has `aria-current="page"` at `/agents`, `aria-current="true"` (and no `"page"`) at `/agents/pip-the-planner`, and neither at `/`. Spread `importOriginal()` so the mock replaces one export rather than the module
 16. Run `npm run lint`, `npm test`, `npm run build`. Commit as Phase 4
 
 ## Group 2 — Phase 5: Agent Profile
 
 17. Create `src/app/agents/[id]/page.tsx` — an **`async`** server component, since `params` is a `Promise` in this version of Next.js:
     - `export async function generateStaticParams()` returns `getAgents().map(({ id }) => ({ id }))`
-    - The page signature is `{ params }: { params: Promise<{ id: string }> }`, and it starts with `const { id } = await params`
+    - The page props are typed `PageProps<"/agents/[id]">` — a global helper generated from the route — and the body starts with `const { id } = await params`
     - `getAgent(id)`; if `undefined`, call `notFound()` from `next/navigation`
     - Renders the name as `<h1>`, the role, the tagline, the bio, and a back link to `/agents`
-    - An initials circle stands in for an avatar: the agent's initials in `bg-primary` with contrasting text, marked `aria-hidden` since the name is already beside it
+    - An initials circle stands in for an avatar: the agent's initials in `bg-primary` with contrasting text, marked `aria-hidden` since the name is already beside it. It lives at `src/app/agents/[id]/Initials.tsx`, since only this route uses it
 18. `export async function generateMetadata({ params })` — awaits `params`, and returns the agent's name as `title`, or `"Agent not found"` when there is no match
 19. Add the profile's non-async parts to a test only if they are extracted as components. Otherwise this route is covered by the build and by `validation.md`'s HTTP checks — note it in the commit message rather than writing a test Vitest cannot run
 20. Run `npm run lint`, `npm test`, `npm run build`. The build output must list `/agents/[id]` with six prerendered paths. Commit as Phase 5
@@ -53,7 +53,7 @@ The types and seed data for all three entities are written once, up front. Split
 ## Group 3 — Phase 6: Ailment Catalog
 
 21. Create `src/app/ailments/page.tsx` — synchronous, `metadata.title: "Ailments"`. A `<CardGrid>` of `<Card>`s from `getAilments()`, each linking to `/ailments/[id]`, with `summary` as the summary and the severity word in the footer slot
-22. Create `src/components/SeverityChip.tsx` (server): props `severity`. Renders the word itself, capitalised, in a bordered pill. `mild` uses `text-muted` with `border-border`, `moderate` uses `text-primary` with `border-primary`, `severe` uses `text-foreground` with `border-accent` and a semibold weight. The word is always rendered, so color is never the only signal
+22. Create `src/components/SeverityChip.tsx` (server): props `severity`. Renders the word itself, capitalised, in a bordered pill. `mild` uses `text-muted` with `border-border`, `moderate` uses `text-foreground` with `border-border-strong`, `severe` uses `text-foreground` with `border-accent`, `bg-accent/15` and a semibold weight. (Phase 18: `moderate` originally used `primary`, which is the link colour, and `severe` relied on a 2.15:1 border, so the scale did not escalate.) The word is always rendered, so color is never the only signal
 23. Create `src/app/ailments/[id]/page.tsx` — `async`, with `generateStaticParams`, `await params`, `notFound()` on a miss, and `generateMetadata`. Renders name, severity chip, and description, plus a back link to `/ailments`. No related sections yet — Phase 7 and Phase 9 add them
 24. Add `Ailments` to the link array in `src/components/Nav.tsx`
 25. Create `src/app/ailments/page.test.tsx` (all six names, hrefs, severity words) and `src/components/SeverityChip.test.tsx` (each of the three severities renders its own word)
@@ -61,7 +61,7 @@ The types and seed data for all three entities are written once, up front. Split
 
 ## Group 4 — Phase 7: Agents ↔ Ailments
 
-27. Create `src/components/Chip.tsx` (server): props `href` and `children`. A small pill-shaped `next/link`, `inline-flex min-h-11 items-center` for the tap target, `border-border` with `hover:border-primary` and a visible focus outline
+27. Create `src/components/Chip.tsx` (server): props `href` and `children`. A small pill-shaped `next/link`, `inline-flex min-h-11 items-center` for the tap target, `border-primary/40 bg-primary/5 text-primary` with `hover:border-primary hover:bg-primary/10` and a visible focus outline. It is a link and must read as one (Phase 18: it originally rendered as grey body text, quieter than the inert severity chip beside it)
 28. Create `src/components/RelatedSection.tsx` (server): props `title`, `emptyText`, and `children`. Renders an `<h2>` at `text-xl` and a `<ul>` of chips with `flex flex-wrap gap-2`. When `children` is empty, renders `emptyText` in `text-muted` instead of an empty list
 29. In `src/app/agents/[id]/page.tsx`, add a `RelatedSection` titled "Ailments" listing `getAilmentsForAgent(id)` as chips linking to `/ailments/[id]`. Empty text: a line noting this agent is, remarkably, symptom-free
 30. In `src/app/ailments/[id]/page.tsx`, add a `RelatedSection` titled "Who has this" listing `getAgentsForAilment(id)` as chips linking to `/agents/[id]`. Empty text: a line noting no agent has reported it yet

@@ -13,9 +13,12 @@ export type { Agent, Ailment, Severity, Therapy };
  * An agent owns `ailmentIds` and an ailment owns `therapyIds`. The reverse
  * directions are derived below rather than stored, so the two can never
  * disagree.
+ *
+ * Every accessor returns `readonly`: these are the live module arrays, and an
+ * in-place `.sort()` by a caller would outlive the request that made it.
  */
 
-export function getAgents(): Agent[] {
+export function getAgents(): readonly Agent[] {
   return agents;
 }
 
@@ -23,7 +26,7 @@ export function getAgent(id: string): Agent | undefined {
   return agents.find((agent) => agent.id === id);
 }
 
-export function getAilments(): Ailment[] {
+export function getAilments(): readonly Ailment[] {
   return ailments;
 }
 
@@ -31,7 +34,7 @@ export function getAilment(id: string): Ailment | undefined {
   return ailments.find((ailment) => ailment.id === id);
 }
 
-export function getTherapies(): Therapy[] {
+export function getTherapies(): readonly Therapy[] {
   return therapies;
 }
 
@@ -40,7 +43,7 @@ export function getTherapy(id: string): Therapy | undefined {
 }
 
 /** The ailments on an agent's chart. Unknown ids are dropped. */
-export function getAilmentsForAgent(agentId: string): Ailment[] {
+export function getAilmentsForAgent(agentId: string): readonly Ailment[] {
   const agent = getAgent(agentId);
   if (!agent) return [];
 
@@ -50,12 +53,12 @@ export function getAilmentsForAgent(agentId: string): Ailment[] {
 }
 
 /** Derived from the agents' charts, never stored. */
-export function getAgentsForAilment(ailmentId: string): Agent[] {
+export function getAgentsForAilment(ailmentId: string): readonly Agent[] {
   return agents.filter((agent) => agent.ailmentIds.includes(ailmentId));
 }
 
 /** The therapies recommended for an ailment. Unknown ids are dropped. */
-export function getTherapiesForAilment(ailmentId: string): Therapy[] {
+export function getTherapiesForAilment(ailmentId: string): readonly Therapy[] {
   const ailment = getAilment(ailmentId);
   if (!ailment) return [];
 
@@ -65,6 +68,6 @@ export function getTherapiesForAilment(ailmentId: string): Therapy[] {
 }
 
 /** Derived from the ailments' treatment lists, never stored. */
-export function getAilmentsForTherapy(therapyId: string): Ailment[] {
+export function getAilmentsForTherapy(therapyId: string): readonly Ailment[] {
   return ailments.filter((ailment) => ailment.therapyIds.includes(therapyId));
 }

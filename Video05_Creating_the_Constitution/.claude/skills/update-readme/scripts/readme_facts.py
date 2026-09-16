@@ -14,6 +14,19 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+
+def make_stdout_safe() -> None:
+    """Route names come off the filesystem and are not guaranteed ASCII.
+
+    Printing one containing a character outside cp1252 crashes a stock Windows
+    console without this.
+    """
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
+
+
 APP = Path("src/app")
 README = Path("README.md")
 
@@ -30,6 +43,8 @@ def routes() -> list[str]:
 
 
 def main() -> int:
+    make_stdout_safe()
+
     if not APP.is_dir():
         print(f"No {APP} here - run this from the project root.", file=sys.stderr)
         return 1

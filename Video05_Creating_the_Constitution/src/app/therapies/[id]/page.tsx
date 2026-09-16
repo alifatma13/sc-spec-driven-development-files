@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
-import Chip from "@/components/Chip";
 import RelatedSection from "@/components/RelatedSection";
 import { getAilmentsForTherapy, getTherapies, getTherapy } from "@/lib/data";
 
@@ -45,15 +44,16 @@ export default async function TherapyPage({ params }: TherapyPageProps) {
       <p className="max-w-prose text-base text-muted text-pretty">{therapy.description}</p>
 
       <RelatedSection
-        title="Treats"
+        title="Treats these ailments"
+        items={ailments.map((ailment) => ({
+          id: ailment.id,
+          href: `/ailments/${ailment.id}`,
+          label: ailment.name,
+        }))}
         emptyText="No ailment is currently referred here. The therapy remains available, and hopeful."
-      >
-        {ailments.map((ailment) => (
-          <Chip key={ailment.id} href={`/ailments/${ailment.id}`}>
-            {ailment.name}
-          </Chip>
-        ))}
-      </RelatedSection>
+        emptyHref="/ailments"
+        emptyLinkText="Browse all ailments"
+      />
     </article>
   );
 }

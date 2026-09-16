@@ -20,14 +20,16 @@ from pathlib import Path
 SEP = "\x1f"  # unit separator: safe inside commit subjects, unlike "|"
 TITLE = "# Changelog"
 MARKER_RE = re.compile(r"<!--\s*changelog:last-commit\s+([0-9a-f]{7,40})\s*-->")
-DATE_HEADING_RE = re.compile(r"^##\s+(\d{4}-\d{2}-\d{2})\s*$")
+# \b, not \s*$: a heading edited by hand into "## 2026-09-11 - Release 1"
+# must still be recognised, or a second "## 2026-09-11" grows beneath it.
+DATE_HEADING_RE = re.compile(r"^##\s+(\d{4}-\d{2}-\d{2})\b")
 
 
 def make_stdout_safe() -> None:
     """--dry-run prints commit subjects, which are not guaranteed to be ASCII.
 
-    A subject like "Add phase 7 agents <-> ailments" crashes a stock Windows
-    console (cp1252) without this.
+    A subject carrying a character outside cp1252 -- an arrow, a curly quote,
+    an accented name -- crashes a stock Windows console without this.
     """
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -60,7 +62,10 @@ def read_commits(pathspec: str, since_sha: str | None) -> list[tuple[str, str, s
     args = ["log", "--no-merges", f"--format=%H{SEP}%ad{SEP}%s", "--date=short"]
     if since_sha:
         args.append(f"{since_sha}..HEAD")
-    args += ["--", pathspec]
+    # Exclude the changelog itself: without this, every run records the commit
+    # that wrote the previous run, and the file fills with bullets about itself.
+    # A commit touching CHANGELOG.md *and* real files still counts.
+    args += ["--", pathspec, ":(exclude)CHANGELOG.md"]
 
     rows = []
     for line in run_git(args).splitlines():
@@ -147,6 +152,12 @@ def main() -> int:
         print("Not a git repository (or git is not installed).", file=sys.stderr)
         return 1
 
+    try:
+        run_git(["rev-parse", "--verify", "HEAD"])
+    except subprocess.CalledProcessError:
+        print("This repository has no commits yet - nothing to record.", file=sys.stderr)
+        return 1
+
     changelog = Path("CHANGELOG.md")
     exists = changelog.exists()
     text = changelog.read_text(encoding="utf-8") if exists else ""
@@ -166,8 +177,12 @@ def main() -> int:
 
     commits = read_commits(args.path, since_sha)
 
-    if not since_sha and commits:
-        # No usable marker, so skip anything already written down.
+    if commits:
+        # Skip subjects already written down. This runs on every path, not only
+        # the no-marker fallback: a bullet written by hand (SKILL.md explains
+        # when that is needed) sits in the file while the marker still predates
+        # its commit, and the next run would otherwise add it a second time.
+        #
         # removeprefix, not lstrip("- "): lstrip strips every leading "-" and
         # space, mangling a subject that itself starts with a dash.
         recorded = {
@@ -181,6 +196,18 @@ def main() -> int:
     if not commits:
         # ASCII only: the Windows console is cp1252 and mangles em-dashes.
         print(f"No new commits for {args.path} - CHANGELOG.md is up to date.")
+
+        # Advance the marker even though no bullet was added. Two cases reach
+        # here: the marker is missing, or it predates commits whose subjects are
+        # already in the file because someone wrote them by hand. The only other
+        # set_marker call is below this return, so without this a lost marker is
+        # never restored and a hand-written bullet leaves the marker stuck
+        # behind HEAD for good.
+        head = run_git(["rev-parse", "HEAD"]).strip()
+        if exists and not args.dry_run and since_sha != head:
+            set_marker(header, head)
+            changelog.write_text(render(header, sections), encoding="utf-8", newline="\n")
+            print("Restored the marker." if since_sha is None else "Advanced the marker.")
         return 0
 
     by_date: dict[str, list[str]] = {}

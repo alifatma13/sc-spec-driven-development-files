@@ -17,7 +17,7 @@ export default function AilmentsPage() {
     <>
       <PageHeader
         title="Ailments"
-        intro="The conditions we see most often. If you recognise yourself in more than three of these, that is normal and also a little concerning."
+        intro="The conditions we see most often. If you recognize yourself in more than three of these, that is normal and also a little concerning."
       />
       <CardGrid>
         {ailments.map((ailment) => (

@@ -3,8 +3,12 @@ import { expect, test, vi } from "vitest";
 import Header from "@/components/Header";
 
 // The header renders <Nav />, a client component that reads the pathname.
-// There is no router in jsdom, so stand one in.
-vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+// There is no router in jsdom, so stand one in -- without discarding the rest
+// of the module, which anything in the tree may import.
+vi.mock("next/navigation", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next/navigation")>()),
+  usePathname: () => "/",
+}));
 
 test("main nav links the wordmark home", () => {
   render(<Header />);

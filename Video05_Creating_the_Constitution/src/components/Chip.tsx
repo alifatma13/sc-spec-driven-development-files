@@ -5,7 +5,7 @@ export default function Chip({ href, children }: { href: string; children: strin
     <li>
       <Link
         href={href}
-        className="inline-flex min-h-11 items-center rounded-full border border-border bg-surface px-4 text-sm text-foreground transition-colors hover:border-primary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="inline-flex min-h-11 items-center rounded-full border border-primary/40 bg-primary/5 px-4 text-sm text-primary transition-colors hover:border-primary hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         {children}
       </Link>

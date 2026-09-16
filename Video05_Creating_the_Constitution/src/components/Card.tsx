@@ -20,7 +20,7 @@ export default function Card({ href, title, summary, eyebrow, children }: CardPr
     <li className="h-full">
       <Link
         href={href}
-        className="flex h-full flex-col gap-2 rounded-lg border border-border bg-surface p-4 transition-colors hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:p-5"
+        className="flex h-full flex-col gap-2 rounded-lg border border-border-strong bg-surface p-4 transition-colors hover:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:p-5"
       >
         {eyebrow ? (
           <span className="text-xs font-medium tracking-wide text-muted uppercase">{eyebrow}</span>

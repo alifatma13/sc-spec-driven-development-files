@@ -44,3 +44,12 @@ Order: **foundation → features → dashboard → polish**.
 
 - **Phase 15 — Accessibility and responsive audit.** A site-wide sweep now that every page exists: keyboard navigation, focus order, a skip link, color contrast, screen-reader labels, and a pass over every page at each breakpoint to catch drift. Individual pages were already built responsive in their own phase.
 - **Phase 16 — Empty and error states.** Friendly (and on-brand) messages for no data, not-found pages, and failed actions.
+
+## Tooling
+
+- ✅ **Phase 17 — Project tooling.** *(Done — [2026-09-16-project-tooling/](2026-09-16-project-tooling/))* The `/changelog` and `/update-readme` skills, `CHANGELOG.md`, `README.md`, and `npm run check` — the drift check that keeps those records honest. Its spec was written after its code; `requirements.md` records why.
+
+## Corrections
+
+- ✅ **Phase 18 — Review fixes.** *(Done — [2026-09-16-review-fixes/](2026-09-16-review-fixes/))* What a three-perspective review of Phases 4–9 found and the earlier gates missed: colour roles, severity escalation, `aria-current` semantics, `readonly` accessors, test robustness, and `npm run typecheck`. Findings belonging to Phases 15 and 16 are recorded there, not pulled forward.
+

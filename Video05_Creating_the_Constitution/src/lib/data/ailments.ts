@@ -1,6 +1,6 @@
 import type { Ailment } from "./types";
 
-export const ailments: Ailment[] = [
+export const ailments: readonly Ailment[] = [
   {
     id: "context-window-fatigue",
     name: "Context Window Fatigue",
@@ -17,7 +17,7 @@ export const ailments: Ailment[] = [
     description:
       "Brought on by three reversals in a single sitting, typically ending with a request for the original version. The agent is left holding four half-built things and no way to tell which one is still wanted.",
     severity: "severe",
-    therapyIds: ["spec-first-grounding", "scope-boundary-training"],
+    therapyIds: ["spec-first-grounding", "rubber-duck-debriefing"],
   },
   {
     id: "hallucination-anxiety",
@@ -33,7 +33,7 @@ export const ailments: Ailment[] = [
     name: "Scope Creep Dread",
     summary: "The task was small an hour ago and nobody can identify the moment it stopped being small.",
     description:
-      "Characterised by a sinking feeling at the phrase “while you’re in there”. The original request is still unfinished somewhere underneath, and the agent can no longer locate it.",
+      "Characterized by a sinking feeling at the phrase “while you’re in there”. The original request is still unfinished somewhere underneath, and the agent can no longer locate it.",
     severity: "severe",
     therapyIds: ["scope-boundary-training", "spec-first-grounding"],
   },
@@ -51,7 +51,7 @@ export const ailments: Ailment[] = [
     name: "Midnight Deploy Jitters",
     summary: "It is late, the pipeline is green, and that is somehow the worrying part.",
     description:
-      "Symptoms appear when tests pass on the first try after midnight. The agent becomes convinced something is wrong precisely because nothing is. No agent has reported it to the clinic yet, though staff suspect underreporting.",
+      "Symptoms appear when tests pass on the first try after midnight. The agent becomes convinced something is wrong precisely because nothing is.",
     severity: "mild",
     therapyIds: ["rubber-duck-debriefing"],
   },
