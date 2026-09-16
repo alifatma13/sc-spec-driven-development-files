@@ -16,3 +16,7 @@
 16. Make decisions as per the tool and ask to check and keep drifting
 17. Ask to create a change log
 16. asked to create a drift strip to stop hook 
+18. I want to stop repeating the feature spec prompt. Use your skill creator to help me write a feature spec,a local skill. Here is the previous prompt: Find the next phase on specs/roadmap.md and make a branch, ask me about the feature spec. Create: - A new directory YYYY-MM-DD-feature-name under specs for this feature work - In there: - 'plan.md' as a series of numbered task groups. - 'requirements.md' for the scope, decisions, context - 'validation.md' for how to know the implementation succeeded and can be merged 
+Riker to specs/mission.md and specs/tech-stack.md for guidance. 
+19. MCP for external tools, Agents.md for rules and agent skill for capturing repeatable workflow with extra context and ACP to connect agents to clients
+
