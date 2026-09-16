@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Nav from "@/components/Nav";
 
 export default function Header() {
   return (
     <header className="border-b border-border bg-surface">
       <nav
         aria-label="Main"
-        className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-2 sm:px-6 sm:py-3"
+        className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-4 py-2 sm:px-6 sm:py-3"
       >
         <Link
           href="/"
@@ -13,6 +14,7 @@ export default function Header() {
         >
           AgentClinic
         </Link>
+        <Nav />
       </nav>
     </header>
   );
