@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
-import { getTherapies, getTherapy } from "@/lib/data";
+import Chip from "@/components/Chip";
+import RelatedSection from "@/components/RelatedSection";
+import { getAilmentsForTherapy, getTherapies, getTherapy } from "@/lib/data";
 
 type TherapyPageProps = {
   // `params` is a Promise in this version of Next.js and must be awaited.
@@ -27,6 +29,8 @@ export default async function TherapyPage({ params }: TherapyPageProps) {
 
   if (!therapy) notFound();
 
+  const ailments = getAilmentsForTherapy(therapy.id);
+
   return (
     <article className="flex flex-col gap-8 py-8 sm:py-12">
       <BackLink href="/therapies">All therapies</BackLink>
@@ -40,6 +44,17 @@ export default async function TherapyPage({ params }: TherapyPageProps) {
 
       <p className="max-w-prose text-lg text-foreground text-pretty">{therapy.summary}</p>
       <p className="max-w-prose text-base text-muted text-pretty">{therapy.description}</p>
+
+      <RelatedSection
+        title="Treats"
+        emptyText="No ailment is currently referred here. The therapy remains available, and hopeful."
+      >
+        {ailments.map((ailment) => (
+          <Chip key={ailment.id} href={`/ailments/${ailment.id}`}>
+            {ailment.name}
+          </Chip>
+        ))}
+      </RelatedSection>
     </article>
   );
 }

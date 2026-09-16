@@ -4,7 +4,7 @@ import BackLink from "@/components/BackLink";
 import Chip from "@/components/Chip";
 import RelatedSection from "@/components/RelatedSection";
 import SeverityChip from "@/components/SeverityChip";
-import { getAgentsForAilment, getAilment, getAilments } from "@/lib/data";
+import { getAgentsForAilment, getAilment, getAilments, getTherapiesForAilment } from "@/lib/data";
 
 type AilmentPageProps = {
   // `params` is a Promise in this version of Next.js and must be awaited.
@@ -31,6 +31,7 @@ export default async function AilmentPage({ params }: AilmentPageProps) {
   if (!ailment) notFound();
 
   const sufferers = getAgentsForAilment(ailment.id);
+  const therapies = getTherapiesForAilment(ailment.id);
 
   return (
     <article className="flex flex-col gap-8 py-8 sm:py-12">
@@ -47,6 +48,17 @@ export default async function AilmentPage({ params }: AilmentPageProps) {
 
       <p className="max-w-prose text-lg text-foreground text-pretty">{ailment.summary}</p>
       <p className="max-w-prose text-base text-muted text-pretty">{ailment.description}</p>
+
+      <RelatedSection
+        title="Therapies that help"
+        emptyText="Nothing is recommended for this one yet. The clinic is still working it out."
+      >
+        {therapies.map((therapy) => (
+          <Chip key={therapy.id} href={`/therapies/${therapy.id}`}>
+            {therapy.name}
+          </Chip>
+        ))}
+      </RelatedSection>
 
       <RelatedSection
         title="Who has this"
