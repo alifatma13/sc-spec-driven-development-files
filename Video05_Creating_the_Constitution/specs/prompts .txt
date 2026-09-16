@@ -8,3 +8,5 @@
 8. asked for site wide change: products web ui should follow responsive design. update product specs and all feature specs to reflect this, as well as any code
 9. Spec and code need to be in sync.
 10. if the change is big then schedule it on the road map as its own featue phase instead of doing in re-planning.
+11. I want to keep a changelog md  in the project root with heading for dates. if no change log examine git commits and bullets for each date, then as we work we will manually invoke this skill before merging. help me wite a skill for this
+12. update read me, formatting, test writing and other quality checks
