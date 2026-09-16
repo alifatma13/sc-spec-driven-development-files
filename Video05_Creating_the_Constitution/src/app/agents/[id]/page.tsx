@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
+import Chip from "@/components/Chip";
 import Initials from "@/components/Initials";
-import { getAgent, getAgents } from "@/lib/data";
+import RelatedSection from "@/components/RelatedSection";
+import { getAgent, getAgents, getAilmentsForAgent } from "@/lib/data";
 
 type AgentPageProps = {
   // `params` is a Promise in this version of Next.js and must be awaited.
@@ -28,6 +30,8 @@ export default async function AgentPage({ params }: AgentPageProps) {
 
   if (!agent) notFound();
 
+  const ailments = getAilmentsForAgent(agent.id);
+
   return (
     <article className="flex flex-col gap-8 py-8 sm:py-12">
       <BackLink href="/agents">All agents</BackLink>
@@ -44,6 +48,17 @@ export default async function AgentPage({ params }: AgentPageProps) {
 
       <p className="max-w-prose text-lg text-foreground text-pretty">{agent.tagline}</p>
       <p className="max-w-prose text-base text-muted text-pretty">{agent.bio}</p>
+
+      <RelatedSection
+        title="Ailments"
+        emptyText={`${agent.name} has no ailments on file, which the clinic finds either admirable or suspicious.`}
+      >
+        {ailments.map((ailment) => (
+          <Chip key={ailment.id} href={`/ailments/${ailment.id}`}>
+            {ailment.name}
+          </Chip>
+        ))}
+      </RelatedSection>
     </article>
   );
 }
