@@ -1,7 +1,9 @@
 # Changelog
-<!-- changelog:last-commit 946bcafe625f2cdcf5bf6d14efd2c6797c41c481 -->
+<!-- changelog:last-commit 4daf4e637570c0079faa690faaf8de7de89c6d07 -->
 
 ## 2026-09-16
+- Add update-readme skill and bring the README up to date
+- Record the changelog skill commit
 - Add changelog skill and bootstrap CHANGELOG.md
 - Mark phases 4-9 done on the roadmap
 - Add phase 9 ailment and therapy cross-links
