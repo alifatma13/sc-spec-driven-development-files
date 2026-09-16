@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
-import Initials from "@/components/Initials";
+import Initials from "./Initials";
 
 test("takes the first letter of up to two words", () => {
   const { container } = render(<Initials name="Pip" />);

@@ -12,8 +12,10 @@ const links = [
 
 /**
  * The only client component in the app: `usePathname` requires one.
- * A detail page keeps its section marked, so `/agents/pip-the-planner`
- * still highlights "Agents".
+ *
+ * A detail page keeps its section marked, so `/agents/pip-the-planner` still
+ * highlights "Agents" -- but as `aria-current="true"` (an ancestor), not
+ * `"page"`, which would tell a screen reader the link goes where it already is.
  */
 export default function Nav() {
   const pathname = usePathname();
@@ -21,13 +23,14 @@ export default function Nav() {
   return (
     <ul className="flex list-none flex-wrap items-center gap-x-4 gap-y-1">
       {links.map(({ href, label }) => {
-        const isCurrent = pathname === href || pathname.startsWith(`${href}/`);
+        const isPage = pathname === href;
+        const isCurrent = isPage || pathname.startsWith(`${href}/`);
 
         return (
           <li key={href}>
             <Link
               href={href}
-              aria-current={isCurrent ? "page" : undefined}
+              aria-current={isPage ? "page" : isCurrent ? "true" : undefined}
               className={`inline-flex min-h-11 items-center rounded-sm text-sm font-medium underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary ${
                 isCurrent
                   ? "text-primary underline decoration-2"

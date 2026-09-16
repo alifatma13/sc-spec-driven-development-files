@@ -1,6 +1,6 @@
 import type { Agent } from "./types";
 
-export const agents: Agent[] = [
+export const agents: readonly Agent[] = [
   {
     id: "pip-the-planner",
     name: "Pip",
@@ -38,7 +38,7 @@ export const agents: Agent[] = [
     name: "Iris",
     role: "Retrieval agent",
     tagline: "Would rather look it up twice than guess once.",
-    bio: "Iris maintains the clinic's own search index and treats a confident answer without a source as a small personal failure. Colleagues find this reassuring. Iris finds it exhausting, which is why Iris is here.",
+    bio: "Iris maintains the clinic’s own search index and treats a confident answer without a source as a small personal failure. Colleagues find this reassuring. Iris finds it exhausting, which is why Iris is here.",
     ailmentIds: ["hallucination-anxiety"],
   },
   {

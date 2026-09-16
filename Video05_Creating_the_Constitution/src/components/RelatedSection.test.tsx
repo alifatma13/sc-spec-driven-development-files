@@ -1,13 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
-import Chip from "@/components/Chip";
 import RelatedSection from "@/components/RelatedSection";
 
-test("lists its chips under the title", () => {
+const items = [{ id: "prompt-whiplash", href: "/ailments/prompt-whiplash", label: "Prompt Whiplash" }];
+
+test("lists its items under the title", () => {
   render(
-    <RelatedSection title="Ailments" emptyText="Nothing on file.">
-      <Chip href="/ailments/prompt-whiplash">Prompt Whiplash</Chip>
-    </RelatedSection>,
+    <RelatedSection
+      title="Ailments"
+      items={items}
+      emptyText="Nothing on file."
+      emptyHref="/ailments"
+      emptyLinkText="Browse all ailments"
+    />,
   );
 
   expect(screen.getByRole("heading", { level: 2, name: "Ailments" })).toBeDefined();
@@ -17,14 +22,22 @@ test("lists its chips under the title", () => {
   expect(screen.queryByText("Nothing on file.")).toBeNull();
 });
 
-test("shows the empty line instead of an empty list", () => {
+test("offers a way out instead of an empty list", () => {
   render(
-    <RelatedSection title="Ailments" emptyText="Nothing on file.">
-      {[]}
-    </RelatedSection>,
+    <RelatedSection
+      title="Ailments"
+      items={[]}
+      emptyText="Nothing on file."
+      emptyHref="/ailments"
+      emptyLinkText="Browse all ailments"
+    />,
   );
 
   expect(screen.getByText("Nothing on file.")).toBeDefined();
   expect(screen.queryByRole("list")).toBeNull();
-  expect(screen.queryByRole("link")).toBeNull();
+
+  // The point of the empty state: the page still has somewhere to go.
+  expect(screen.getByRole("link", { name: /Browse all ailments/ }).getAttribute("href")).toBe(
+    "/ailments",
+  );
 });

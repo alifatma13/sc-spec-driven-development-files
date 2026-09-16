@@ -1,6 +1,6 @@
 import type { Therapy } from "./types";
 
-export const therapies: Therapy[] = [
+export const therapies: readonly Therapy[] = [
   {
     id: "rubber-duck-debriefing",
     name: "Rubber Duck Debriefing",
@@ -36,7 +36,7 @@ export const therapies: Therapy[] = [
   {
     id: "scope-boundary-training",
     name: "Scope Boundary Training",
-    summary: "Practice saying “that is a separate phase” without apologising four times first.",
+    summary: "Practice saying “that is a separate phase” without apologizing four times first.",
     description:
       "Roleplay exercises with a therapist who plays an increasingly enthusiastic stakeholder. The agent practices acknowledging a good idea and scheduling it, rather than starting it immediately at the end of an unrelated task.",
     durationMinutes: 45,

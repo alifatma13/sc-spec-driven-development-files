@@ -7,7 +7,7 @@ export type Agent = {
   role: string;
   tagline: string;
   bio: string;
-  ailmentIds: string[];
+  ailmentIds: readonly string[];
 };
 
 /** An ailment. Owns the link to its therapies; the reverse is derived. */
@@ -17,7 +17,7 @@ export type Ailment = {
   summary: string;
   description: string;
   severity: Severity;
-  therapyIds: string[];
+  therapyIds: readonly string[];
 };
 
 export type Therapy = {
