@@ -276,12 +276,16 @@ if (strict) {
 const label = strict ? "check --strict" : "check";
 
 if (hook) {
-  // Silent when clean: a guard that chatters every turn gets switched off.
+  // One line when clean, so a passing check is visible without chattering: a
+  // guard that fills the screen every turn gets switched off.
+  let systemMessage;
   if (problems.length > 0) {
     const lines = problems.map(({ check, detail }) => `  - ${check}: ${detail}`).join("\n");
-    const systemMessage = `Spec/record drift (${problems.length}):\n${lines}\n\nRun \`npm run check\` for detail.`;
-    console.log(JSON.stringify({ systemMessage }));
+    systemMessage = `Spec/record drift (${problems.length}):\n${lines}\n\nRun \`npm run check\` for detail.`;
+  } else {
+    systemMessage = `Drift check passed: ${passes.length} checks, no drift`;
   }
+  console.log(JSON.stringify({ systemMessage }));
   process.exit(0);
 }
 

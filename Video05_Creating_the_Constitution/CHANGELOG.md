@@ -1,5 +1,10 @@
 # Changelog
-<!-- changelog:last-commit 8c391819748f9f2ea6f9fd54d72602b01ae0cb8a -->
+<!-- changelog:last-commit 6309c7a9d9bc3c72757c1e85dd2477ab01d6f89b -->
+
+## 2026-09-17
+- Add notes on MCP vs. skill + CLI
+- Add feature-spec skill to write each phase's spec
+- Print one line when the drift check passes
 
 ## 2026-09-16
 - Advance the changelog marker past hand-written bullets

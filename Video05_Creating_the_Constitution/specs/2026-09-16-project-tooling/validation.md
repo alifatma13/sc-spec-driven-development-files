@@ -49,7 +49,7 @@ On a clean, merged branch this exits 0. Its three extra checks must each fail on
 
 ### 4. The Stop hook runs the check
 
-With the hook configured in `.claude/settings.json`, finish any turn in Claude Code. The check runs and its output is visible.
+With the hook configured in `.claude/settings.json`, finish any turn in Claude Code. The check runs and its output is visible: on a clean tree, a single line, `Drift check passed: N checks, no drift`.
 
 Introduce drift (add `min-h-screen` to a component), finish a turn, and confirm the failure surfaces in the session rather than waiting for review. Revert it.
 
