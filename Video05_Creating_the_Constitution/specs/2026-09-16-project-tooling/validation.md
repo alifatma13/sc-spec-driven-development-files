@@ -69,6 +69,7 @@ Both must exit 0 and print readable output. Then the failure paths, each of whic
 - **Lost marker.** Delete the `changelog:last-commit` line from `CHANGELOG.md`, run the script with no new commits. It must report nothing to add **and rewrite the marker.** Confirm the marker is present afterwards
 - **Decorated heading.** Add `## 2026-09-11 - Release 1` to a scratch copy and run against it. The script must insert beneath that heading, not create a second `## 2026-09-11` section
 - **Self-recording.** Run the script, commit the result, run it again. The second run must report nothing to add. `CHANGELOG.md` must contain no bullet whose subject is about updating the changelog
+- **Hand-written bullet.** Write a bullet by hand for a commit that touches code, then run the script. It must report nothing to add, print `Advanced the marker.`, and **not** duplicate that bullet. Run it twice more: the file must not change again. Before this was fixed, the run duplicated the hand-written line and `--strict` stayed red afterwards
 
 ### 6. The changelog is current at merge
 

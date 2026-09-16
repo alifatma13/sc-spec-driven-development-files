@@ -39,6 +39,8 @@ A `<!-- changelog:last-commit <sha> -->` marker in the header records how far th
 
 If a run finds no marker in the header, it writes one before exiting, even when it adds no bullets. Without this the fallback path — rescanning all history and de-duplicating on subject text — becomes permanent rather than one-shot, and reworded bullets get re-added verbatim on every subsequent run.
 
+The marker also advances when every commit in range is *already* recorded. That is what a hand-written final bullet looks like to the next run: the subject is in the file, the marker still predates its commit. Without advancing, `--strict` stays red for good; without de-duplicating on every path rather than only the no-marker one, the next run adds the hand-written bullet a second time. Both are needed, and a run must be idempotent — running it three times in a row changes the file once.
+
 ### The changelog does not record itself
 
 Commits that touch only `CHANGELOG.md` are excluded from the scan. Otherwise every run records the previous run, and the file fills with "Record the changelog commit" bullets that describe no change to the product.

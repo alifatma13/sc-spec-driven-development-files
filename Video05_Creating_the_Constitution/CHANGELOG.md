@@ -1,7 +1,8 @@
 # Changelog
-<!-- changelog:last-commit d92853081e4724b18c1f05aeb270fa0dc1303100 -->
+<!-- changelog:last-commit 41e0ae9616266ea7c0da04743de503de5509c464 -->
 
 ## 2026-09-16
+- Advance the changelog marker past hand-written bullets
 - Say how the changelog resolves its own final entry
 - Exclude CHANGELOG.md from the strict changelog check
 - Fix what the review found in the app
