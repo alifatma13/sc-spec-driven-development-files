@@ -4,7 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 /** Each link is added in the phase that creates the route it points at. */
-const links = [{ href: "/agents", label: "Agents" }];
+const links = [
+  { href: "/agents", label: "Agents" },
+  { href: "/ailments", label: "Ailments" },
+];
 
 /**
  * The only client component in the app: `usePathname` requires one.
