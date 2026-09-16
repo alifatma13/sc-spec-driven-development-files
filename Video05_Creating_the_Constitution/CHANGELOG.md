@@ -1,10 +1,15 @@
 # Changelog
-<!-- changelog:last-commit c9c4e55b3ef79585b3e8130c5933573561eb445f -->
+<!-- changelog:last-commit d92853081e4724b18c1f05aeb270fa0dc1303100 -->
 
 ## 2026-09-16
-- Record the readme skill in the changelog
+- Exclude CHANGELOG.md from the strict changelog check
+- Fix what the review found in the app
+- Fix five bugs in the changelog and readme scripts
+- Add the drift check, the Stop hook that runs it, and npm run typecheck
+- Add phase 17 and 18 specs, and reconcile the phases 4-9 spec
+- Type dynamic pages with the PageProps helper
+- Trim the readme script and fix three changelog bugs
 - Add update-readme skill and bring the README up to date
-- Record the changelog skill commit
 - Add changelog skill and bootstrap CHANGELOG.md
 - Mark phases 4-9 done on the roadmap
 - Add phase 9 ailment and therapy cross-links
