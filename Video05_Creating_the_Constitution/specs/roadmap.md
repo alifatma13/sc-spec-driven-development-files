@@ -16,18 +16,18 @@ Order: **foundation → features → dashboard → polish**.
 
 ## Agents
 
-- **Phase 4 — Agent list.** `/agents` shows a list of agents from seed data.
-- **Phase 5 — Agent profile.** `/agents/[id]` shows one agent's details.
+- ✅ **Phase 4 — Agent list.** *(Done — [2026-09-16-agents-ailments-therapies/](2026-09-16-agents-ailments-therapies/))* `/agents` shows a list of agents from seed data.
+- ✅ **Phase 5 — Agent profile.** *(Done — [2026-09-16-agents-ailments-therapies/](2026-09-16-agents-ailments-therapies/))* `/agents/[id]` shows one agent's details.
 
 ## Ailments
 
-- **Phase 6 — Ailment catalog.** `/ailments` lists common agent ailments (for example "context window fatigue" or "prompt whiplash").
-- **Phase 7 — Agents ↔ ailments.** An agent's profile shows their ailments, and an ailment page shows the agents who suffer from it.
+- ✅ **Phase 6 — Ailment catalog.** *(Done — [2026-09-16-agents-ailments-therapies/](2026-09-16-agents-ailments-therapies/))* `/ailments` lists common agent ailments (for example "context window fatigue" or "prompt whiplash").
+- ✅ **Phase 7 — Agents ↔ ailments.** *(Done — [2026-09-16-agents-ailments-therapies/](2026-09-16-agents-ailments-therapies/))* An agent's profile shows their ailments, and an ailment page shows the agents who suffer from it.
 
 ## Therapies
 
-- **Phase 8 — Therapy catalog.** `/therapies` lists the available therapies.
-- **Phase 9 — Ailments ↔ therapies.** Each ailment page recommends the therapies that treat it.
+- ✅ **Phase 8 — Therapy catalog.** *(Done — [2026-09-16-agents-ailments-therapies/](2026-09-16-agents-ailments-therapies/))* `/therapies` lists the available therapies.
+- ✅ **Phase 9 — Ailments ↔ therapies.** *(Done — [2026-09-16-agents-ailments-therapies/](2026-09-16-agents-ailments-therapies/))* Each ailment page recommends the therapies that treat it.
 
 ## Booking appointments
 
