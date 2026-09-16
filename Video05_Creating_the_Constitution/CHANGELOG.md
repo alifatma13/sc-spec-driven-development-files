@@ -1,5 +1,5 @@
 # Changelog
-<!-- changelog:last-commit 41e0ae9616266ea7c0da04743de503de5509c464 -->
+<!-- changelog:last-commit 8c391819748f9f2ea6f9fd54d72602b01ae0cb8a -->
 
 ## 2026-09-16
 - Advance the changelog marker past hand-written bullets
